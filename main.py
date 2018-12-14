@@ -76,7 +76,7 @@ def handle_serial(json_data, methods=['GET', 'POST']):
 def handle_led(json_data, methods=['GET', 'POST']):
     print('Received event: {0}'.format(json))
 
-    led = int(json_data['led'])
+    led = int(json_data['color'])
 
     if led == 23:
         blue()
