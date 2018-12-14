@@ -24,14 +24,6 @@
 			});
 		});
 	});
-
-	socket.on( 'answer', function( msg ) {
-	  console.log( msg );
-	  if( typeof msg.author !== 'undefined' ) {
-	    $('h3').remove();
-	    $('div.message_holder' ).append('<div><b style="color: #000">' + msg.author + '</b>' + msg.message + '</div>');
-	  }
-	});
 </script>
 </body>
 </html>

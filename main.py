@@ -17,7 +17,7 @@ def index():
     return render_template('index.html')
 
 
-@app.route('/blue/')
+# @app.route('/blue/')
 def blue():
     blue_led.on()
     time.sleep(1)
@@ -31,10 +31,10 @@ def blue():
     time.sleep(1)
     blue_led.off()
     time.sleep(1)
-    return render_template('blue.html')
+    # return render_template('blue.html')
 
 
-@app.route('/red/')
+# @app.route('/red/')
 def red():
     red_led.on()
     time.sleep(1)
@@ -48,7 +48,7 @@ def red():
     time.sleep(1)
     red_led.off()
     time.sleep(1)
-    return render_template('red.html')
+    # return render_template('red.html')
 
 
 def messageReceived(methods=['GET', 'POST']):
@@ -70,11 +70,20 @@ def handle_serial(json_data, methods=['GET', 'POST']):
     print('Connected from {0}'.format(json_data))
     data = {'message': 'Connected to serial'}
     socketio.emit('serial', json.dumps(data), callback=serial_read)
-    data = {'author': 'serial_input', 'message': 'Hello from serial'}
-    time.sleep(10)
-    print('sleeped')
-    socketio.emit('serial', data, callback=serial_read)
 
+
+@socketio.on('led')
+def handle_led(json_data, methods=['GET', 'POST']):
+    print('Received event: {0}'.format(json))
+
+    led = int(json_data['led'])
+
+    if led == 23:
+        blue()
+    elif led == 24:
+        red()
+    else:
+        print('Pin {0} is not being used'.format(led))
 
 if __name__ == '__main__':
     socketio.run(app, host='0.0.0.0', debug=True)
