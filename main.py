@@ -2,16 +2,53 @@ from flask import Flask, render_template
 from flask_socketio import SocketIO
 import time
 import json
+from gpiozero import LED
 
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'secret!'
 socketio = SocketIO(app)
+blue_led = LED(23)
+red_led = LED(24)
 
 
 @app.route('/')
 def index():
     return render_template('index.html')
+
+
+@app.route('/blue/')
+def blue():
+    blue_led.on()
+    time.sleep(1)
+    blue_led.of()
+    time.sleep(1)
+    blue_led.on()
+    time.sleep(1)
+    blue_led.of()
+    time.sleep(1)
+    blue_led.on()
+    time.sleep(1)
+    blue_led.of()
+    time.sleep(1)
+    return render_template('blue.html')
+
+
+@app.route('/red/')
+def red():
+    red_led.on()
+    time.sleep(1)
+    red_led.of()
+    time.sleep(1)
+    red_led.on()
+    time.sleep(1)
+    red_led.of()
+    time.sleep(1)
+    red_led.on()
+    time.sleep(1)
+    red_led.of()
+    time.sleep(1)
+    return render_template('red.html')
 
 
 def messageReceived(methods=['GET', 'POST']):
