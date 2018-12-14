@@ -1,10 +1,37 @@
-<!DOCTYPE html>
 <html>
 <head>
-	<title>Test</title>
+	<title>Session</title>
 </head>
 <body>
-	<h1>test</h1>
+  <h3 style='color: #ccc;font-size: 30px;'>No LED blinking yet yet..</h3>
+  <button class="btn btn--blue" data-led="23">BLUE</button>
+  <button class="btn btn--red" datra-led="24">RED</button>
+  
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.3/socket.io.min.js"></script>
+<script type="text/javascript">
+	var socket = io.connect('http://' + document.domain + ':' + location.port);
+	
+	socket.on( 'connect', function() {
+		socket.emit( 'connect2pi', {
+			data: 'Let me in'
+		});
+		var $btn = $( '.btn' ).on( 'click', function( e ) {
+			var led_color = $(this).data('led');
+			console.log(led_color);
+			socket.emit( 'led', {
+			  color : led_color
+			});
+		});
+	});
 
+	socket.on( 'answer', function( msg ) {
+	  console.log( msg );
+	  if( typeof msg.author !== 'undefined' ) {
+	    $('h3').remove();
+	    $('div.message_holder' ).append('<div><b style="color: #000">' + msg.author + '</b>' + msg.message + '</div>');
+	  }
+	});
+</script>
 </body>
 </html>
