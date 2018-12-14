@@ -5,7 +5,7 @@
 <body>
   <h3 style='color: #ccc;font-size: 30px;'>No LED blinking yet yet..</h3>
   <button class="btn btn--blue" data-led="23">BLUE</button>
-  <button class="btn btn--red" datra-led="24">RED</button>
+  <button class="btn btn--red" data-led="24">RED</button>
   
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.3/socket.io.min.js"></script>
@@ -16,15 +16,7 @@
 		socket.emit( 'connect2pi', {
 			data: 'Let me in'
 		});
-		var $btnBlue = $( '.btn--blue' ).on( 'click', function( e ) {
-			var led_color = $(this).data('led');
-			console.log(led_color);
-			socket.emit( 'led', {
-			  color : led_color
-			});
-		});
-
-		var $btnRed = $( '.btn--red' ).on( 'click', function( e ) {
+		var $btn = $( '.btn' ).on( 'click', function( e ) {
 			var led_color = $(this).data('led');
 			console.log(led_color);
 			socket.emit( 'led', {
