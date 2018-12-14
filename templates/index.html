@@ -12,17 +12,23 @@
 <script type="text/javascript">
 	var socket = io.connect('http://' + document.domain + ':' + location.port);
 	
-	socket.on('connect', function() {
+	socket.on( 'connect', function() {
 		socket.emit( 'connect2pi', {
 			data: 'Let me in'
 		});
-		$('.btn').each(function () {
-			$('this').on('click', function( e ) {
-				var led_color = $(this).data('led');
-				console.log(led_color);
-				socket.emit('led', {
-				  color : led_color
-				});
+		var $btnBlue = $( '.btn--blue' ).on( 'click', function( e ) {
+			var led_color = $(this).data('led');
+			console.log(led_color);
+			socket.emit( 'led', {
+			  color : led_color
+			});
+		});
+
+		var $btnRed = $( '.btn--red' ).on( 'click', function( e ) {
+			var led_color = $(this).data('led');
+			console.log(led_color);
+			socket.emit( 'led', {
+			  color : led_color
 			});
 		});
 	});
